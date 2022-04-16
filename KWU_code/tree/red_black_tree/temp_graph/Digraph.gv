@@ -1,0 +1,5 @@
+digraph {
+	Red [fillcolor=red2 style=filled]
+	Black [fillcolor=gray38 style=filled]
+	Red -> Black
+}

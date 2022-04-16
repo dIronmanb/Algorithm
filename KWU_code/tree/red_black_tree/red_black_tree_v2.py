@@ -1,7 +1,14 @@
-import random
-from timeit import default_timer as timer
+'''
+ 1. red black tree 구현
+ 2. ...
+ 3. ...
+ 
+ 흐음... solution보면서 고칠 부분 고치기!
 
-from torch import inverse
+'''
+
+
+import random
 
 class Node(object):
     def __init__(self, key, parent):
@@ -36,7 +43,8 @@ def search(node, key):
 
 def RIGHT_ROTATE(X):
     
-    print("(RIGHT ROTATE!) X.key: {}, X.left.key: {}".format(X.key, X.left.key if X.left else "None"))
+    print("(RIGHT ROTATE)")
+    # print("(RIGHT ROTATE!) X.key: {}, X.left.key: {}".format(X.key, X.left.key if X.left else "None"))
     
     Y = X.left
     
@@ -61,7 +69,8 @@ def RIGHT_ROTATE(X):
 
 def LEFT_ROTATE(X): 
     
-    print("(LEFT ROTATE!) X.key: {}, X.right.key: {}".format(X.key, X.right.key if X.right else "None"))
+    print("(LEFT ROTATE)")
+    # print("(LEFT ROTATE!) X.key: {}, X.right.key: {}".format(X.key, X.right.key if X.right else "None"))
       
     Y = X.right
     X.right = Y.left
@@ -93,15 +102,14 @@ def RB_insert(root, key):
     
         
     if N.parent != None:           
-        if(N.parent.color == 'RED'):
-            
+        while(N.parent and N.parent.color == 'RED'):
+
             if N.parent == N.parent.parent.right:
                 U = N.parent.parent.left
                 
                 # Case 3-2
                 if U == None or U.color == "BLACK":
                                       
-                    
                     if N.parent.parent.right == N.parent:
                         
                         # Case 3-2-2
@@ -112,12 +120,17 @@ def RB_insert(root, key):
                             root_ = RIGHT_ROTATE(N.parent)
                             if root_:
                                 root = root_
-                            root_ = LEFT_ROTATE(N.parent.parent)
+                                
+                            # 만약 현재 Node가 3개인 상황이라면 -> root와 같이 있다면
+                            if N.parent == root:
+                                root_ = LEFT_ROTATE(N.parent)
+                            # Node가 4개 이상이라면
+                            else:                        
+                                root_ = LEFT_ROTATE(N.parent.parent)
                             if root_:
                                 root = root_    
                             
-                                                   
-                          
+                              
                         # Case 3-2-1                          
                         elif N.parent.right == N:
 
@@ -157,6 +170,8 @@ def RB_insert(root, key):
                     N.parent.color = "BLACK"
                     U.color = 'BLACK'
                     N.parent.parent.color = 'RED'
+                    # 상단 G node로 이동
+                    N = N.parent.parent
                     
 # - # - # - # - # - # - # - # - # - # - # - # - # - # - # - # - # - # - # - # - # -
             elif N.parent == N.parent.parent.left:
@@ -176,7 +191,13 @@ def RB_insert(root, key):
                             root_ = LEFT_ROTATE(N.parent)
                             if root_:
                                 root = root_
-                            root_ = RIGHT_ROTATE(N.parent.parent)
+                                
+                            # 만약 현재 Node가 3개인 상황이라면 -> root와 같이 있다면
+                            if N.parent == root:
+                                root_ = RIGHT_ROTATE(N.parent)
+                            # Node가 4개 이상이라면
+                            else:
+                                root_ = RIGHT_ROTATE(N.parent.parent)
                             if root_:
                                 root = root_    
                             
@@ -227,7 +248,7 @@ def RB_insert(root, key):
     return root
 
 x = random.sample(range(10),10) # x는 list타입 0~999까지
-
+# x = [9, 13, 10, 1, 6, 10, 7, 8, 4, 2]
 value = x[5]
 
 root = None
@@ -237,19 +258,10 @@ for i in x:
     n += 1
     root = RB_insert(root, i)
 
-start = timer()
 
 for i in range(len(x)):
     
     node = search(root, x[i])
-    print("find x[{}]: {}, color: {}, parent: {}".format(i, node.key, node.color, node.parent))
+    print("find x[{}]: {}, color: {}, parent: {}".format(i, node.key, node.color, node.parent.key if node.parent else "None"))
     print("\tleft: {}, right: {}".format(node.left.key if node.left else "None", node.right.key if node.right else "None"))
     print()
-    
-# print(timer() - start)
-# if found is not None:
-#     print('value', value, 'found', found.key, 'color', found.color)
-#     print('test', root.color)
-#     print(True if found.key == value else False)
-    
-# parent의 type이  Nonetype이라 color랑 type이 안맞음

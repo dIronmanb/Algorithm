@@ -19,6 +19,8 @@
 '''
 import random
 
+import graphviz 
+
 class Node:
     
     def __init__(self, key, parent = None):
