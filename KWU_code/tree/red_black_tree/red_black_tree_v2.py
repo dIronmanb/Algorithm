@@ -21,8 +21,8 @@ class Node(object):
 def insert(node, key, parent):
     if node is None:
         node = Node(key, parent)
-        
         return node
+    
     elif key < node.key:
         node.left = insert(node.left, key, node)
         
@@ -100,148 +100,156 @@ def RB_insert(root, key):
     root = insert(root, key, None) # parent가 None이니까 아무것도 안됨...
     N = search(root, key)
     
-        
-    if N.parent != None:           
-        while(N.parent and N.parent.color == 'RED'):
+    if N and N.parent == None:
+        N.color = "BLACK"
+        return N
+    
+    if N.parent and N.parent.parent == None: 
+        N.parent = "BLACK"
+        return N.parent
+          
+         
+    while N.parent and N.parent.color == 'RED':
 
-            if N.parent == N.parent.parent.right:
-                U = N.parent.parent.left
-                
-                # Case 3-2
-                if U == None or U.color == "BLACK":
-                                      
-                    if N.parent.parent.right == N.parent:
-                        
-                        # Case 3-2-2
-                        if N.parent.left == N:
-                            N.color = "BLACK"
-                            N.parent.parent.color = "RED"
-                            
-                            root_ = RIGHT_ROTATE(N.parent)
-                            if root_:
-                                root = root_
-                                
-                            # 만약 현재 Node가 3개인 상황이라면 -> root와 같이 있다면
-                            if N.parent == root:
-                                root_ = LEFT_ROTATE(N.parent)
-                            # Node가 4개 이상이라면
-                            else:                        
-                                root_ = LEFT_ROTATE(N.parent.parent)
-                            if root_:
-                                root = root_    
-                            
-                              
-                        # Case 3-2-1                          
-                        elif N.parent.right == N:
-
-                            N.parent.color = "BLACK"
-                            N.parent.parent.color = "RED"
-                            root_ = LEFT_ROTATE(N.parent.parent)
-                            if root_:
-                                root = root_
-                            
-                            
-                   
-                    elif N.parent.parent.left == N.parent:
-                        
-                        # Case 3-2-4
-                        if N.parent.right == N:
-                            N.color = "BLACK"
-                            N.parent.parent = "RED" 
-                            
-                            root_ = LEFT_ROTATE(N.parent)
-                            if root_:
-                                root = root_
-                            root_ = RIGHT_ROTATE(N.parent.parent)
-                            if root_:
-                                root = root_
-                           
-                        
-                        # Case 3-2-3
-                        elif N.parent.left == N:
-                            N.parent.color = "BLACK"
-                            N.parent.parent.color = "RED"
-                            root_ = RIGHT_ROTATE(N.parent.parent)
-                            if root_:
-                                root = root_
-                
-                # Case 3-1                    
-                elif U.color == 'RED':
-                    N.parent.color = "BLACK"
-                    U.color = 'BLACK'
-                    N.parent.parent.color = 'RED'
-                    # 상단 G node로 이동
-                    N = N.parent.parent
+        if N.parent == N.parent.parent.right:
+            U = N.parent.parent.left
+            
+            # Case 3-2
+            if U == None or U.color == "BLACK":
+                                    
+                if N.parent.parent.right == N.parent:
                     
+                    # Case 3-2-2
+                    if N.parent.left == N:
+                        N.color = "BLACK"
+                        N.parent.parent.color = "RED"
+                        
+                        root_ = RIGHT_ROTATE(N.parent)
+                        if root_:
+                            root = root_
+                            
+                        # 만약 현재 Node가 3개인 상황이라면 -> root와 같이 있다면
+                        if N.parent == root:
+                            root_ = LEFT_ROTATE(N.parent)
+                        # Node가 4개 이상이라면
+                        else:                        
+                            root_ = LEFT_ROTATE(N.parent.parent)
+                        if root_:
+                            root = root_    
+                        
+                            
+                    # Case 3-2-1                          
+                    elif N.parent.right == N:
+
+                        N.parent.color = "BLACK"
+                        N.parent.parent.color = "RED"
+                        root_ = LEFT_ROTATE(N.parent.parent)
+                        if root_:
+                            root = root_
+                        
+                        
+                
+                elif N.parent.parent.left == N.parent:
+                    
+                    # Case 3-2-4
+                    if N.parent.right == N:
+                        N.color = "BLACK"
+                        N.parent.parent = "RED" 
+                        
+                        root_ = LEFT_ROTATE(N.parent)
+                        if root_:
+                            root = root_
+                        root_ = RIGHT_ROTATE(N.parent.parent)
+                        if root_:
+                            root = root_
+                        
+                    
+                    # Case 3-2-3
+                    elif N.parent.left == N:
+                        N.parent.color = "BLACK"
+                        N.parent.parent.color = "RED"
+                        root_ = RIGHT_ROTATE(N.parent.parent)
+                        if root_:
+                            root = root_
+            
+            # Case 3-1                    
+            elif U.color == 'RED':
+                N.parent.color = "BLACK"
+                U.color = 'BLACK'
+                N.parent.parent.color = 'RED'
+                # 상단 G node로 이동
+                N = N.parent.parent
+                
 # - # - # - # - # - # - # - # - # - # - # - # - # - # - # - # - # - # - # - # - # -
-            elif N.parent == N.parent.parent.left:
+        elif N.parent == N.parent.parent.left:
+            
+            U = N.parent.parent.right
+            
+            # Case 3-2
+            if U == None or U.color == "BLACK":
                 
-                U = N.parent.parent.right
-                
-                # Case 3-2
-                if U == None or U.color == "BLACK":
+                if N.parent.parent.left == N.parent:
                     
-                    if N.parent.parent.left == N.parent:
+                    # Case 3-2-2
+                    if N.parent.right == N:
+                        N.color = "BLACK"
+                        N.parent.parent.color = "RED"
                         
-                        # Case 3-2-2
-                        if N.parent.right == N:
-                            N.color = "BLACK"
-                            N.parent.parent.color = "RED"
+                        root_ = LEFT_ROTATE(N.parent)
+                        if root_:
+                            root = root_
                             
-                            root_ = LEFT_ROTATE(N.parent)
-                            if root_:
-                                root = root_
-                                
-                            # 만약 현재 Node가 3개인 상황이라면 -> root와 같이 있다면
-                            if N.parent == root:
-                                root_ = RIGHT_ROTATE(N.parent)
-                            # Node가 4개 이상이라면
-                            else:
-                                root_ = RIGHT_ROTATE(N.parent.parent)
-                            if root_:
-                                root = root_    
-                            
-                                                   
-                          
-                        # Case 3-2-1                          
-                        elif N.parent.left == N:
-
-                            N.parent.color = "BLACK"
-                            N.parent.parent.color = "RED"
-                            root_ = RIGHT_ROTATE(N.parent.parent)
-                            if root_:
-                                root = root_
-                            
-                            
-                   
-                    elif N.parent.parent.right == N.parent:
-                        
-                        # Case 3-2-4
-                        if N.parent.left == N:
-                            N.color = "BLACK"
-                            N.parent.parent = "RED" 
-                            
+                        # 만약 현재 Node가 3개인 상황이라면 -> root와 같이 있다면
+                        if N.parent == root:
                             root_ = RIGHT_ROTATE(N.parent)
-                            if root_:
-                                root = root_
-                            root_ = LEFT_ROTATE(N.parent.parent)
-                            if root_:
-                                root = root_
-                           
+                        # Node가 4개 이상이라면
+                        else:
+                            root_ = RIGHT_ROTATE(N.parent.parent)
+                        if root_:
+                            root = root_    
                         
-                        # Case 3-2-3
-                        elif N.parent.right == N:
-                            N.parent.color = "BLACK"
-                            N.parent.parent.color = "RED"
-                            root_ = LEFT_ROTATE(N.parent.parent)
-                            if root_:
-                                root = root_
+                                                
+                        
+                    # Case 3-2-1                          
+                    elif N.parent.left == N:
+
+                        N.parent.color = "BLACK"
+                        N.parent.parent.color = "RED"
+                        root_ = RIGHT_ROTATE(N.parent.parent)
+                        if root_:
+                            root = root_
+                        
+                        
                 
-                # Case 3-1                    
-                elif U.color == 'RED':
-                    N.parent.color = "BLACK"
-                    U.color = 'BLACK'
-                    N.parent.parent.color = 'RED'                
+                elif N.parent.parent.right == N.parent:
+                    
+                    # Case 3-2-4
+                    if N.parent.left == N:
+                        N.color = "BLACK"
+                        N.parent.parent = "RED" 
+                        
+                        root_ = RIGHT_ROTATE(N.parent)
+                        if root_:
+                            root = root_
+                        root_ = LEFT_ROTATE(N.parent.parent)
+                        if root_:
+                            root = root_
+                        
+                    
+                    # Case 3-2-3
+                    elif N.parent.right == N:
+                        N.parent.color = "BLACK"
+                        N.parent.parent.color = "RED"
+                        root_ = LEFT_ROTATE(N.parent.parent)
+                        if root_:
+                            root = root_
+            
+            # Case 3-1                    
+            elif U.color == 'RED':
+                N.parent.color = "BLACK"
+                U.color = 'BLACK'
+                N.parent.parent.color = 'RED'  
+                N = N.parent.parent              
                 
             
     root.color = 'BLACK'        
