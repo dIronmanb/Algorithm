@@ -1,0 +1,25 @@
+digraph {
+	rankdir=LR
+	"pour water into a pot"
+	ignition
+	"pour water into a pot" -> ignition
+	ignition
+	"add ramen"
+	ignition -> "add ramen"
+	"add ramen soup"
+	ignition -> "add ramen soup"
+	"add eggs"
+	ignition -> "add eggs"
+	"add ramen"
+	"add eggs"
+	"add ramen" -> "add eggs"
+	"add eggs"
+	"open a bag of ramen"
+	"add ramen"
+	"open a bag of ramen" -> "add ramen"
+	"add ramen soup"
+	"open a bag of ramen" -> "add ramen soup"
+	"add ramen soup"
+	"add eggs"
+	"add ramen soup" -> "add eggs"
+}
