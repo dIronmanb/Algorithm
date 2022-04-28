@@ -3,7 +3,7 @@ import graphviz
 # make Graph
 g = graphviz.Graph(format = 'png', filename = "graph", directory = "visulization")
 g.attr(rankdir = 'LR', size = '10.0')
-graph = [   [1, 2, 3],
+info = [   [1, 2, 3],
             [1, 3, 2],
             [3, 2, 1],
             [2, 5, 2],
@@ -17,7 +17,7 @@ graph = [   [1, 2, 3],
             [6, 7, 4]  ]
 
 
-for i in graph:
+for i in info:
     g.node(str(i[0]))
     g.node(str(i[1]))
     g.edge(str(i[0]), str(i[1]), label = str(i[2]))
@@ -30,4 +30,11 @@ for i in graph:
 #         g.edge(key, i)
     
 g.render(view = False)    
+INF = int(10e9)
 
+
+    
+       
+    
+    
+    
