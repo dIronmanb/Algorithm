@@ -1,0 +1,33 @@
+graph {
+	rankdir=LR size=10.0
+	apple
+	grape
+	apple -- grape [label=5]
+	lemon
+	peer
+	lemon -- peer [label=3]
+	pineapple
+	apple
+	pineapple -- apple [label=1]
+	tomato
+	lemon
+	tomato -- lemon [label=7]
+	corn
+	grape
+	corn -- grape [label=10]
+	peer
+	corn
+	peer -- corn [label=11]
+	orange
+	pineapple
+	orange -- pineapple [label=2]
+	lemon
+	orange
+	lemon -- orange [label=1]
+	melon
+	apple
+	melon -- apple [label=4]
+	tomato
+	melon
+	tomato -- melon [label=12]
+}
