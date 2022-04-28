@@ -21,6 +21,7 @@ n = 7
 m = 12
 
 graph = [[] for _ in range(n + 1)]
+# new_graph = [[] for _ in range(n + 1)]
 visited = [False] * (n + 1)
 distance = [INF] * (n + 1)
 
@@ -59,19 +60,27 @@ def dijkstra(start):
             
             if cost < distance[j[0]]:
                 distance[j[0]] = cost
+                # new_graph[next].append(j)
                 # 더 먼 거리는 어떻게 삭제할까?
                 try:
-                    graph[start].remove(j)
                     graph[j[0]].remove((start, j[1])) # 이게 맞나?
+                    graph[start].remove(j)
                 except:
                     pass
                              
-                
-for start in range(1, n + 1):
-    dijkstra(start)
-    print("start node: {} >> {}".format(start, distance))
-    visited = [False] * (n + 1)
-    distance = [INF] * (n + 1)
+start = 1
+dijkstra(start)
+
+for i in graph:
+    print(i)
+print("\n\n")
+
+print("start node: {} >> {}".format(start, distance))
+
+
+visited = [False] * (n + 1)
+distance = [INF] * (n + 1)
+
     
     
 # make graph
@@ -93,6 +102,11 @@ for i in range(1, n):
     for j in graph[i]:
         g.node(str(j[0]))
         g.edge(str(i), str(j[0]), label = str(j[1]))
+        
+        try:
+            graph[j[0]].remove((i, j[1]))
+        except:
+            pass
         
 g.render(view = False)
     
