@@ -60,10 +60,8 @@ sequence = deque()
 visited = {key : False for key in graph.keys()}
 
 # topological sort
-for key, value in graph.items():
-    
-    for i in value:
-        if visited[key] == False:
+for key in graph.keys():
+    if visited[key] == False:
             dfs(graph, key)
             
 for i in sequence:
